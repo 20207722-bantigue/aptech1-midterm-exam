@@ -5,7 +5,7 @@ const Success = () => {
     <>
     <div>
         <h2>Welcome to Success Dashboard</h2>
-        <p>This app demonstrates React Router, useState, and useEffect.</p>
+        <p>Your user has been created successfully!</p>
     </div>
     </>
     )
