@@ -9,6 +9,11 @@ import { Routes, Route } from 'react-router';
 
 function App() {
   const [count, setCount] = useState(0)
+  const [users, setUsers] = useState([]);
+
+  const addUser = (userData) => {
+    setUsers(prev => [...prev, userData]);
+  };
 
   return (
     <>
@@ -19,7 +24,7 @@ function App() {
           <Routes>
             <Route path='/Home' element={<Home />}>Home</Route>
             <Route path='/Profile' element={<Profile />}>Profile</Route>
-            <Route path='/Signup' element={<Signup />}>Signup</Route>
+            <Route path='/Signup' element={<Signup addUser={addUser} />}>Signup</Route>
             <Route path='/Success' element={<Success />}>Success</Route>
           </Routes>
         </div>
