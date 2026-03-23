@@ -23,7 +23,8 @@ function App() {
         <div>
           <Routes>
             <Route path='/Home' element={<Home />}>Home</Route>
-            <Route path='/Profile' element={<Profile />}>Profile</Route>
+            <Route path='/Profile' element={<Profile users={users} />}>Profile</Route>
+            <Route path='/Profile/:id' element={<Profile users={users} />}>Profile Details</Route>
             <Route path='/Signup' element={<Signup addUser={addUser} />}>Signup</Route>
             <Route path='/Success' element={<Success />}>Success</Route>
           </Routes>
