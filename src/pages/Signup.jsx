@@ -57,30 +57,30 @@ const Signup = ({addUser}) => {
             <form onSubmit={onSubmit}>
                 <div style={{ marginBottom: "16px" }}>
                     <label>First Name:</label>
-                    <input type="text" name="FirstName" value={formData.FirstName} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px" }} />
+                    <input type="text" name="FirstName" value={formData.FirstName} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px", border: errors.FirstName ? "2px solid red" : "2px solid #333", borderRadius: "4px" }} />
                     {errors.FirstName && <span style={{ color: "red", fontSize: "14px" }}>{errors.FirstName}</span>}
                 </div>
                 <div style={{ marginBottom: "16px" }}>
                     <label>Surname:</label>
-                    <input type="text" name="Surname" value={formData.Surname} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px" }} />
+                    <input type="text" name="Surname" value={formData.Surname} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px", border: errors.Surname ? "2px solid red" : "2px solid #333", borderRadius: "4px" }} />
                     {errors.Surname && <span style={{ color: "red", fontSize: "14px" }}>{errors.Surname}</span>}
                 </div>
                 <div style={{ marginBottom: "16px" }}>
                     <label>Username:</label>
-                    <input type="text" name="Username" value={formData.Username} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px" }} />
+                    <input type="text" name="Username" value={formData.Username} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px", border: errors.Username ? "2px solid red" : "2px solid #333", borderRadius: "4px" }} />
                     {errors.Username && <span style={{ color: "red", fontSize: "14px" }}>{errors.Username}</span>}
                 </div>
                 <div style={{ marginBottom: "16px" }}>
                     <label>Password:</label>
-                    <input type="password" name="Password" value={formData.Password} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px" }} />
+                    <input type="password" name="Password" value={formData.Password} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px", border: errors.Password ? "2px solid red" : "2px solid #333", borderRadius: "4px" }} />
                     {errors.Password && <span style={{ color: "red", fontSize: "14px" }}>{errors.Password}</span>}
                 </div>
                 <div style={{ marginBottom: "16px" }}>
                     <label>Email:</label>
-                    <input type="email" name="Email" value={formData.Email} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px" }} />
+                    <input type="email" name="Email" value={formData.Email} onChange={onChange} style={{ width: "100%", padding: "8px", marginTop: "4px", border: errors.Email ? "2px solid red" : "2px solid #333", borderRadius: "4px" }} />
                     {errors.Email && <span style={{ color: "red", fontSize: "14px" }}>{errors.Email}</span>}
                 </div>
-                <button type="submit" style={{ width: "100%", padding: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }}>
+                <button type="submit" disabled={!isFormValid()} style={{ width: "100%", padding: "10px", backgroundColor: isFormValid() ? "#007bff" : "#87878b", color: "#fff", border: "none", borderRadius: "4px", cursor: isFormValid() ? "pointer" : "not-allowed" }}>
                     Submit
                 </button>
             </form>
