@@ -1,56 +1,43 @@
-import { useState } from "react";
 import { useNavigate } from 'react-router';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
+const validationSchema = Yup.object().shape({
+  FirstName: Yup.string()
+    .matches(/^[A-Za-z]{2,}$/, 'First Name must contain only letters and be at least 2 characters long')
+    .required('First Name is required'),
+  Surname: Yup.string()
+    .matches(/^[A-Za-z]{2,}$/, 'Surname must contain only letters and be at least 2 characters long')
+    .required('Surname is required'),
+  Username: Yup.string()
+    .matches(/^[A-Za-z0-9._-]+$/, 'Username can only contain letters, numbers, dots, underscores, and hyphens')
+    .required('Username is required'),
+  Email: Yup.string()
+    .email('Invalid email format')
+    .required('Email is required'),
+  Password: Yup.string()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_ ]).{8,16}$/, 'Password must be 8-16 characters and include uppercase, lowercase, number, and special character')
+    .required('Password is required'),
+});
 
 const Signup = ({addUser}) => {
-    const [formData, setFormData] = useState({ FirstName: "", Surname: "", Username: "", Email: "", Password: "" });
-    const [errors, setErrors] = useState({ FirstName: "", Surname: "", Username: "", Email: "", Password: "" });
     const navigate = useNavigate();
 
-    const isFormValid = () =>
-    formData.FirstName && formData.Surname && formData.Username && formData.Email && formData.Password &&
-    !errors.FirstName && !errors.Surname && !errors.Username && !errors.Email && !errors.Password;
-
-    const validate = (field, value) => {
-    let error = "";
-    const nameRegex = /^[A-Za-z]{2,}$/;
-    if (field === "FirstName"){
-        if(!value.trim()) error = "First Name is required";
-        else if(!nameRegex.test(value)) error = "First Name must contain only letters and be at least 2 characters long";
-    }
-    if (field === "Surname"){
-        if(!value.trim()) error = "Surname is required";
-        else if(!nameRegex.test(value)) error = "Surname must contain only letters and be at least 2 characters long";
-    }
-    if (field === "Username"){
-        if(!value.trim()) error = "Username is required";
-        else if(!/^[A-Za-z0-9._-]+$/.test(value)) error = "Username can only contain letters, numbers, dots, underscores, and hyphens";
-    }
-    if (field === "Email") {
-        if (!value.trim()) error = "Email is required";
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = "Invalid email format";
-    }
-    if (field === "Password"){
-        if(!value.trim()) error = "Password is required";
-        else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_ ]).{8,16}$/.test(value)) error = "Password must be 8-16 characters and include uppercase, lowercase, number, and special character";
-    }
-    setErrors(prev => ({ ...prev, [field]: error }));
-  };
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        if (!isFormValid()) return;
-        addUser(formData);
-        setFormData({ FirstName: "", Surname: "", Username: "", Email: "", Password: "" });
-        setErrors({ FirstName: "", Surname: "", Username: "", Email: "", Password: "" });
-        navigate('/Success');   
-    };
-
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        validate(name, value);
-    };
+    const formik = useFormik({
+      initialValues: {
+        FirstName: '',
+        Surname: '',
+        Username: '',
+        Email: '',
+        Password: '',
+      },
+      validationSchema,
+      onSubmit: (values, { resetForm }) => {
+        addUser(values);
+        resetForm();
+        navigate('/Success');
+      },
+    });
     return (
         <div style={{ maxWidth: "500px", margin: "50px auto", padding: "20px", fontFamily: "Arial", backgroundColor: "#f9f9f9", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
             <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Register</h2>
